@@ -42,6 +42,14 @@ func (h *ConsumptionHandler) Create(c *gin.Context) {
 	if input.ConsumedAt == "" {
 		input.ConsumedAt = time.Now().Format("2006-01-02")
 	}
+	var beer models.Beer
+	if err := h.db.First(&beer, input.BeerID).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "beer not found"})
+		return
+	}
+	if input.Amount > 0 {
+		input.AlcoholUnits = input.Amount * beer.ABV / 1000
+	}
 	h.db.Create(&input)
 	h.db.Preload("Beer").First(&input, input.ID)
 	c.JSON(http.StatusCreated, input)
