@@ -38,6 +38,8 @@ export default function ConsumptionPage() {
           <tr style={{ background: '#f5f5f5' }}>
             <th style={thStyle}>Beer</th>
             <th style={thStyle}>Date</th>
+            <th style={thStyle}>Amount</th>
+            <th style={thStyle}>Units</th>
             <th style={thStyle}>Rating</th>
             <th style={thStyle}>Notes</th>
             <th style={thStyle}></th>
@@ -45,15 +47,18 @@ export default function ConsumptionPage() {
         </thead>
         <tbody>
           {logs.length === 0 && (
-            <tr><td colSpan={5} style={{ padding: '1rem', color: '#999', textAlign: 'center' }}>No drinks logged yet.</td></tr>
+            <tr><td colSpan={7} style={{ padding: '1rem', color: '#999', textAlign: 'center' }}>No drinks logged yet.</td></tr>
           )}
           {logs.map((log) => (
             <tr key={log.id}>
               <td style={tdStyle}>{log.beer?.name ?? `Beer #${log.beer_id}`}</td>
-              <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>{new Date(log.consumed_at).toLocaleString()}</td>
+              <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>{new Date(log.consumed_at + 'T00:00:00').toLocaleDateString()}</td>
+              <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>{log.amount ? `${log.amount} ml` : '—'}</td>
+              <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>{log.alcohol_units ? log.alcohol_units.toFixed(2) : '—'}</td>
               <td style={tdStyle}>
-                <span style={{ color: '#f5a623' }}>{'★'.repeat(log.rating)}</span>
-                <span style={{ color: '#ccc' }}>{'★'.repeat(5 - log.rating)}</span>
+                <span style={{ color: '#f5a623' }}>{'★'.repeat(Math.round(log.rating))}</span>
+                <span style={{ color: '#ccc' }}>{'★'.repeat(5 - Math.round(log.rating))}</span>
+                <span style={{ color: '#666', marginLeft: '0.25rem', fontSize: '0.85rem' }}>{log.rating}</span>
               </td>
               <td style={tdStyle}>{log.notes || '—'}</td>
               <td style={tdStyle}>

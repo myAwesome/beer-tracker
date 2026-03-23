@@ -2,15 +2,18 @@ import { useState } from 'react';
 import { createConsumption } from '../api';
 
 export default function ConsumptionForm({ beers, onSave, onCancel }) {
-  const now = new Date();
-  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-
   const [form, setForm] = useState({
     beer_id: '',
+    amount: '',
     rating: 3,
     notes: '',
-    consumed_at: now.toISOString().slice(0, 16),
+    consumed_at: new Date().toISOString().slice(0, 10),
   });
+
+  const selectedBeer = beers.find((b) => b.id === parseInt(form.beer_id));
+  const alcoholUnits = selectedBeer && form.amount > 0
+    ? (parseFloat(form.amount) * selectedBeer.abv / 1000).toFixed(2)
+    : null;
   const [error, setError] = useState('');
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
@@ -21,7 +24,8 @@ export default function ConsumptionForm({ beers, onSave, onCancel }) {
       await createConsumption({
         ...form,
         beer_id: parseInt(form.beer_id),
-        rating: parseInt(form.rating),
+        amount: form.amount ? parseFloat(form.amount) : 0,
+        rating: parseFloat(form.rating),
       });
       onSave();
     } catch (err) {
@@ -49,12 +53,19 @@ export default function ConsumptionForm({ beers, onSave, onCancel }) {
           </select>
         </label>
         <label style={{ fontSize: '0.9rem' }}>
-          Date &amp; Time
-          <input type="datetime-local" value={form.consumed_at} onChange={set('consumed_at')} style={inputStyle} />
+          Date
+          <input type="date" value={form.consumed_at} onChange={set('consumed_at')} style={inputStyle} />
         </label>
         <label style={{ fontSize: '0.9rem' }}>
-          Rating: {'★'.repeat(parseInt(form.rating))}{'☆'.repeat(5 - parseInt(form.rating))} ({form.rating}/5)
-          <input type="range" min="1" max="5" value={form.rating} onChange={set('rating')} style={{ display: 'block', width: '100%' }} />
+          Amount (ml)
+          <input type="number" min="0" step="10" value={form.amount} onChange={set('amount')} placeholder="e.g. 500" style={inputStyle} />
+          {alcoholUnits !== null && (
+            <span style={{ color: '#888', fontSize: '0.8rem' }}>{alcoholUnits} alcohol units</span>
+          )}
+        </label>
+        <label style={{ fontSize: '0.9rem' }}>
+          Rating: {'★'.repeat(Math.round(parseFloat(form.rating)))}{'☆'.repeat(5 - Math.round(parseFloat(form.rating)))} ({form.rating}/5)
+          <input type="range" min="1" max="5" step="0.1" value={form.rating} onChange={set('rating')} style={{ display: 'block', width: '100%' }} />
         </label>
         <label style={{ gridColumn: '1 / -1', fontSize: '0.9rem' }}>
           Notes
