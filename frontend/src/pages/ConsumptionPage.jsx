@@ -50,10 +50,11 @@ export default function ConsumptionPage() {
           {logs.map((log) => (
             <tr key={log.id}>
               <td style={tdStyle}>{log.beer?.name ?? `Beer #${log.beer_id}`}</td>
-              <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>{new Date(log.consumed_at).toLocaleString()}</td>
+              <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>{new Date(log.consumed_at + 'T00:00:00').toLocaleDateString()}</td>
               <td style={tdStyle}>
-                <span style={{ color: '#f5a623' }}>{'★'.repeat(log.rating)}</span>
-                <span style={{ color: '#ccc' }}>{'★'.repeat(5 - log.rating)}</span>
+                <span style={{ color: '#f5a623' }}>{'★'.repeat(Math.round(log.rating))}</span>
+                <span style={{ color: '#ccc' }}>{'★'.repeat(5 - Math.round(log.rating))}</span>
+                <span style={{ color: '#666', marginLeft: '0.25rem', fontSize: '0.85rem' }}>{log.rating}</span>
               </td>
               <td style={tdStyle}>{log.notes || '—'}</td>
               <td style={tdStyle}>

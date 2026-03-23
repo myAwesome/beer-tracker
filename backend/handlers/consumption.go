@@ -35,12 +35,12 @@ func (h *ConsumptionHandler) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "beer_id is required"})
 		return
 	}
-	if input.Rating < 1 || input.Rating > 5 {
+	if input.Rating < 1.0 || input.Rating > 5.0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "rating must be between 1 and 5"})
 		return
 	}
-	if input.ConsumedAt.IsZero() {
-		input.ConsumedAt = time.Now()
+	if input.ConsumedAt == "" {
+		input.ConsumedAt = time.Now().Format("2006-01-02")
 	}
 	h.db.Create(&input)
 	h.db.Preload("Beer").First(&input, input.ID)

@@ -2,14 +2,11 @@ import { useState } from 'react';
 import { createConsumption } from '../api';
 
 export default function ConsumptionForm({ beers, onSave, onCancel }) {
-  const now = new Date();
-  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-
   const [form, setForm] = useState({
     beer_id: '',
     rating: 3,
     notes: '',
-    consumed_at: now.toISOString().slice(0, 16),
+    consumed_at: new Date().toISOString().slice(0, 10),
   });
   const [error, setError] = useState('');
 
@@ -21,7 +18,7 @@ export default function ConsumptionForm({ beers, onSave, onCancel }) {
       await createConsumption({
         ...form,
         beer_id: parseInt(form.beer_id),
-        rating: parseInt(form.rating),
+        rating: parseFloat(form.rating),
       });
       onSave();
     } catch (err) {
@@ -49,12 +46,12 @@ export default function ConsumptionForm({ beers, onSave, onCancel }) {
           </select>
         </label>
         <label style={{ fontSize: '0.9rem' }}>
-          Date &amp; Time
-          <input type="datetime-local" value={form.consumed_at} onChange={set('consumed_at')} style={inputStyle} />
+          Date
+          <input type="date" value={form.consumed_at} onChange={set('consumed_at')} style={inputStyle} />
         </label>
         <label style={{ fontSize: '0.9rem' }}>
-          Rating: {'★'.repeat(parseInt(form.rating))}{'☆'.repeat(5 - parseInt(form.rating))} ({form.rating}/5)
-          <input type="range" min="1" max="5" value={form.rating} onChange={set('rating')} style={{ display: 'block', width: '100%' }} />
+          Rating: {'★'.repeat(Math.round(parseFloat(form.rating)))}{'☆'.repeat(5 - Math.round(parseFloat(form.rating)))} ({form.rating}/5)
+          <input type="range" min="1" max="5" step="0.1" value={form.rating} onChange={set('rating')} style={{ display: 'block', width: '100%' }} />
         </label>
         <label style={{ gridColumn: '1 / -1', fontSize: '0.9rem' }}>
           Notes
