@@ -10,7 +10,7 @@ import (
 
 func main() {
 	cfg := config.Load()
-	db := database.Init(cfg.DBPath)
+	db := database.Init(cfg.DSN)
 	r := router.Setup(db)
 	log.Printf("Server starting on :%s", cfg.Port)
 	r.Run(":" + cfg.Port)
