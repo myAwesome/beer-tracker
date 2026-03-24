@@ -1,10 +1,13 @@
 package config
 
-import "os"
+import (
+	"fmt"
+	"os"
+)
 
 type Config struct {
-	Port   string
-	DBPath string
+	Port string
+	DSN  string
 }
 
 func Load() *Config {
@@ -12,9 +15,27 @@ func Load() *Config {
 	if port == "" {
 		port = "8080"
 	}
-	dbPath := os.Getenv("DB_PATH")
-	if dbPath == "" {
-		dbPath = "beer_tracker.db"
+
+	host := os.Getenv("DB_HOST")
+	if host == "" {
+		host = "localhost"
 	}
-	return &Config{Port: port, DBPath: dbPath}
+	dbPort := os.Getenv("DB_PORT")
+	if dbPort == "" {
+		dbPort = "3306"
+	}
+	user := os.Getenv("DB_USER")
+	if user == "" {
+		user = "root"
+	}
+	password := os.Getenv("DB_PASSWORD")
+	name := os.Getenv("DB_NAME")
+	if name == "" {
+		name = "beer_tracker"
+	}
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		user, password, host, dbPort, name)
+
+	return &Config{Port: port, DSN: dsn}
 }
