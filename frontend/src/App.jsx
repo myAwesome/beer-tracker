@@ -4,6 +4,7 @@ import StatsPage from './pages/StatsPage';
 import BeersPage from './pages/BeersPage';
 import InventoryPage from './pages/InventoryPage';
 import ConsumptionPage from './pages/ConsumptionPage';
+import BreweriesPage from './pages/BreweriesPage';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/" element={<Navigate to="/stats" replace />} />
           <Route path="/stats" element={<StatsPage />} />
           <Route path="/beers" element={<BeersPage />} />
+          <Route path="/breweries" element={<BreweriesPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/consumption" element={<ConsumptionPage />} />
         </Routes>

@@ -31,5 +31,12 @@ export const getConsumption = (beerID) => request(`/api/consumption${beerID ? `?
 export const createConsumption = (data) => request('/api/consumption', { method: 'POST', body: JSON.stringify(data) });
 export const deleteConsumption = (id) => request(`/api/consumption/${id}`, { method: 'DELETE' });
 
+// Breweries
+export const getBreweries = (q) => request(`/api/breweries${q ? `?q=${encodeURIComponent(q)}` : ''}`);
+export const getBrewery = (id) => request(`/api/breweries/${id}`);
+export const createBrewery = (data) => request('/api/breweries', { method: 'POST', body: JSON.stringify(data) });
+export const updateBrewery = (id, data) => request(`/api/breweries/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deleteBrewery = (id) => request(`/api/breweries/${id}`, { method: 'DELETE' });
+
 // Stats
 export const getStats = () => request('/api/stats');
