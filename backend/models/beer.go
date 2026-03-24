@@ -9,7 +9,9 @@ import (
 type Beer struct {
 	ID          uint           `json:"id" gorm:"primaryKey;autoIncrement"`
 	Name        string         `json:"name" gorm:"not null"`
-	Brewery     string         `json:"brewery" gorm:"not null"`
+	Brewery     string         `json:"brewery"`
+	BreweryID   *uint          `json:"brewery_id"`
+	BreweryObj  *Brewery       `json:"brewery_obj,omitempty" gorm:"foreignKey:BreweryID"`
 	Style       string         `json:"style"`
 	ABV         float64        `json:"abv"`
 	IBU         *int           `json:"ibu,omitempty"`
