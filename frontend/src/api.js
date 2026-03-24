@@ -38,5 +38,12 @@ export const createBrewery = (data) => request('/api/breweries', { method: 'POST
 export const updateBrewery = (id, data) => request(`/api/breweries/${id}`, { method: 'PUT', body: JSON.stringify(data) });
 export const deleteBrewery = (id) => request(`/api/breweries/${id}`, { method: 'DELETE' });
 
+// Styles
+export const getStyles = (q) => request(`/api/styles${q ? `?q=${encodeURIComponent(q)}` : ''}`);
+export const getStyle = (id) => request(`/api/styles/${id}`);
+export const createStyle = (data) => request('/api/styles', { method: 'POST', body: JSON.stringify(data) });
+export const updateStyle = (id, data) => request(`/api/styles/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+export const deleteStyle = (id) => request(`/api/styles/${id}`, { method: 'DELETE' });
+
 // Stats
 export const getStats = () => request('/api/stats');

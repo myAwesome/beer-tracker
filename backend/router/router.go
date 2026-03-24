@@ -55,6 +55,14 @@ func Setup(db *gorm.DB) *gin.Engine {
 		breweries.PUT("/:id", breweryH.Update)
 		breweries.DELETE("/:id", breweryH.Delete)
 
+		styleH := handlers.NewStyleHandler(db)
+		styles := api.Group("/styles")
+		styles.GET("", styleH.List)
+		styles.POST("", styleH.Create)
+		styles.GET("/:id", styleH.Get)
+		styles.PUT("/:id", styleH.Update)
+		styles.DELETE("/:id", styleH.Delete)
+
 		statsH := handlers.NewStatsHandler(db)
 		api.GET("/stats", statsH.Get)
 	}

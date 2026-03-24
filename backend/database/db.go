@@ -20,6 +20,7 @@ func Init(dbPath string) *gorm.DB {
 
 	err = db.AutoMigrate(
 		&models.Brewery{},
+		&models.Style{},
 		&models.Beer{},
 		&models.Inventory{},
 		&models.ConsumptionLog{},

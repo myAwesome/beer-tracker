@@ -5,6 +5,7 @@ import BeersPage from './pages/BeersPage';
 import InventoryPage from './pages/InventoryPage';
 import ConsumptionPage from './pages/ConsumptionPage';
 import BreweriesPage from './pages/BreweriesPage';
+import StylesPage from './pages/StylesPage';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/stats" element={<StatsPage />} />
           <Route path="/beers" element={<BeersPage />} />
           <Route path="/breweries" element={<BreweriesPage />} />
+          <Route path="/styles" element={<StylesPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/consumption" element={<ConsumptionPage />} />
         </Routes>
