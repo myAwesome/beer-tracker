@@ -4,6 +4,7 @@ const links = [
   { to: '/stats', label: 'Stats' },
   { to: '/beers', label: 'Beers' },
   { to: '/breweries', label: 'Breweries' },
+  { to: '/styles', label: 'Styles' },
   { to: '/inventory', label: 'Inventory' },
   { to: '/consumption', label: 'Log' },
 ];

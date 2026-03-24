@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
-import { createBeer, updateBeer, getBreweries } from '../api';
+import { createBeer, updateBeer, getBreweries, getStyles } from '../api';
 
 export default function BeerForm({ beer, onSave, onCancel }) {
   const [form, setForm] = useState({
     name: beer?.name || '',
     brewery_id: beer?.brewery_id ?? '',
-    style: beer?.style || '',
+    style_id: beer?.style_id ?? '',
     abv: beer?.abv ?? '',
     ibu: beer?.ibu ?? '',
     description: beer?.description || '',
     image_url: beer?.image_url || '',
   });
   const [breweries, setBreweries] = useState([]);
+  const [styles, setStyles] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
     getBreweries().then(setBreweries).catch(() => {});
+    getStyles().then(setStyles).catch(() => {});
   }, []);
 
   const set = (field) => (e) => setForm({ ...form, [field]: e.target.value });
@@ -28,6 +30,7 @@ export default function BeerForm({ beer, onSave, onCancel }) {
       abv: parseFloat(form.abv) || 0,
       ibu: form.ibu !== '' ? parseInt(form.ibu) : undefined,
       brewery_id: form.brewery_id !== '' ? parseInt(form.brewery_id) : undefined,
+      style_id: form.style_id !== '' ? parseInt(form.style_id) : undefined,
     };
     try {
       beer ? await updateBeer(beer.id, payload) : await createBeer(payload);
@@ -62,8 +65,17 @@ export default function BeerForm({ beer, onSave, onCancel }) {
           </select>
         </label>
 
+        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', fontSize: '0.9rem' }}>
+          Style
+          <select value={form.style_id} onChange={set('style_id')} style={inputStyle}>
+            <option value="">— select style —</option>
+            {styles.map((s) => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </select>
+        </label>
+
         {[
-          { label: 'Style', key: 'style', type: 'text' },
           { label: 'ABV (%)', key: 'abv', type: 'number' },
           { label: 'IBU (optional)', key: 'ibu', type: 'number' },
           { label: 'Image URL', key: 'image_url', type: 'text' },
