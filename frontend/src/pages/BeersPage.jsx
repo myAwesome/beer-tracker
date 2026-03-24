@@ -62,7 +62,7 @@ export default function BeersPage() {
           {beers.map((b) => (
             <tr key={b.id}>
               <td style={tdStyle}><strong>{b.name}</strong></td>
-              <td style={tdStyle}>{b.brewery}</td>
+              <td style={tdStyle}>{b.brewery_obj?.name || b.brewery || '—'}</td>
               <td style={tdStyle}>{b.style || '—'}</td>
               <td style={tdStyle}>{b.abv ? `${b.abv}%` : '—'}</td>
               <td style={tdStyle}>{b.ibu ?? '—'}</td>
