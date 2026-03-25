@@ -30,5 +30,6 @@ func Init(dsn string) *gorm.DB {
 	}
 
 	log.Println("Database initialized and migrated")
+	Seed(db)
 	return db
 }
