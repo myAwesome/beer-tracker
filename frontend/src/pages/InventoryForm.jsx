@@ -5,9 +5,6 @@ export default function InventoryForm({ item, beers, onSave, onCancel }) {
   const [form, setForm] = useState({
     beer_id: item?.beer_id || '',
     quantity: item?.quantity || 1,
-    purchase_date: item?.purchase_date ? item.purchase_date.split('T')[0] : '',
-    price_per_unit: item?.price_per_unit || '',
-    notes: item?.notes || '',
   });
   const [error, setError] = useState('');
 
@@ -19,7 +16,6 @@ export default function InventoryForm({ item, beers, onSave, onCancel }) {
       ...form,
       beer_id: parseInt(form.beer_id),
       quantity: parseInt(form.quantity),
-      price_per_unit: parseFloat(form.price_per_unit) || 0,
     };
     try {
       item ? await updateInventory(item.id, payload) : await createInventory(payload);
@@ -50,9 +46,6 @@ export default function InventoryForm({ item, beers, onSave, onCancel }) {
         </label>
         {[
           { label: 'Quantity *', key: 'quantity', type: 'number', min: 1, required: true },
-          { label: 'Price Per Unit', key: 'price_per_unit', type: 'number', step: '0.01' },
-          { label: 'Purchase Date', key: 'purchase_date', type: 'date' },
-          { label: 'Notes', key: 'notes', type: 'text' },
         ].map(({ label, key, ...rest }) => (
           <label key={key} style={{ fontSize: '0.9rem' }}>
             {label}

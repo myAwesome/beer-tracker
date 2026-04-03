@@ -49,9 +49,6 @@ export default function InventoryPage() {
           <tr style={{ background: '#f5f5f5' }}>
             <th style={thStyle}>Beer</th>
             <th style={thStyle}>Qty</th>
-            <th style={thStyle}>Purchased</th>
-            <th style={thStyle}>Price/unit</th>
-            <th style={thStyle}>Notes</th>
             <th style={thStyle}></th>
           </tr>
         </thead>
@@ -63,13 +60,7 @@ export default function InventoryPage() {
             <tr key={item.id}>
               <td style={tdStyle}>{item.beer?.name ?? `Beer #${item.beer_id}`}</td>
               <td style={tdStyle}>{item.quantity}</td>
-              <td style={tdStyle}>
-                {item.purchase_date ? new Date(item.purchase_date).toLocaleDateString() : '—'}
-              </td>
-              <td style={tdStyle}>
-                {item.price_per_unit ? `$${item.price_per_unit.toFixed(2)}` : '—'}
-              </td>
-              <td style={tdStyle}>{item.notes || '—'}</td>
+
               <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>
                 <button onClick={() => openEdit(item)} style={{ marginRight: '0.25rem' }}>Edit</button>
                 <button onClick={async () => { await deleteInventory(item.id); load(); }}>Delete</button>
