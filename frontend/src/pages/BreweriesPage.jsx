@@ -17,8 +17,8 @@ export default function BreweriesPage() {
     load();
   };
 
-  const thStyle = { padding: '0.5rem', textAlign: 'left', borderBottom: '2px solid #ddd', whiteSpace: 'nowrap' };
-  const tdStyle = { padding: '0.5rem', borderBottom: '1px solid #f0f0f0' };
+  const thStyle = { padding: '0.5rem', textAlign: 'left', borderBottom: '2px solid var(--border)', whiteSpace: 'nowrap' };
+  const tdStyle = { padding: '0.5rem', borderBottom: '1px solid var(--border-soft)' };
 
   return (
     <div>
@@ -44,7 +44,7 @@ export default function BreweriesPage() {
 
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr style={{ background: '#f5f5f5' }}>
+          <tr style={{ background: 'var(--surface-muted)' }}>
             <th style={thStyle}>Name</th>
             <th style={thStyle}>Country</th>
             <th style={thStyle}>City</th>
@@ -55,7 +55,7 @@ export default function BreweriesPage() {
         </thead>
         <tbody>
           {breweries.length === 0 && (
-            <tr><td colSpan={6} style={{ padding: '1rem', color: '#999', textAlign: 'center' }}>No breweries yet. Add one!</td></tr>
+            <tr><td colSpan={6} style={{ padding: '1rem', color: 'var(--text-muted)', textAlign: 'center' }}>No breweries yet. Add one!</td></tr>
           )}
           {breweries.map((b) => (
             <tr key={b.id}>

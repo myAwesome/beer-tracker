@@ -17,9 +17,9 @@ export default function StyleForm({ style, onSave, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ background: '#f9f9f9', padding: '1rem', marginBottom: '1rem', borderRadius: 4 }}>
+    <form onSubmit={handleSubmit} style={{ background: 'var(--surface-muted)', padding: '1rem', marginBottom: '1rem', borderRadius: 4 }}>
       <h3 style={{ margin: '0 0 1rem' }}>{style?.id ? 'Edit Style' : 'New Style'}</h3>
-      {error && <p style={{ color: 'red', margin: '0 0 0.5rem' }}>{error}</p>}
+      {error && <p style={{ color: 'var(--danger)', margin: '0 0 0.5rem' }}>{error}</p>}
       <label style={{ display: 'block', marginBottom: '0.75rem' }}>
         Name *<br />
         <input

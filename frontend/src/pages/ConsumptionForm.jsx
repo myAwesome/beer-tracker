@@ -38,10 +38,10 @@ export default function ConsumptionForm({ beers, onSave, onCancel }) {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem', borderRadius: 8, background: '#f9f9f9' }}
+      style={{ border: '1px solid var(--border)', padding: '1rem', marginBottom: '1rem', borderRadius: 8, background: 'var(--surface-muted)' }}
     >
       <h3 style={{ marginTop: 0 }}>Log a Drink</h3>
-      {error && <p style={{ color: 'red', margin: '0 0 0.5rem' }}>{error}</p>}
+      {error && <p style={{ color: 'var(--danger)', margin: '0 0 0.5rem' }}>{error}</p>}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
         <label style={{ gridColumn: '1 / -1', fontSize: '0.9rem' }}>
           Beer *
@@ -60,7 +60,7 @@ export default function ConsumptionForm({ beers, onSave, onCancel }) {
           Amount (ml)
           <input type="number" min="0" step="10" value={form.amount} onChange={set('amount')} placeholder="e.g. 500" style={inputStyle} />
           {alcoholUnits !== null && (
-            <span style={{ color: '#888', fontSize: '0.8rem' }}>{alcoholUnits} alcohol units</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>{alcoholUnits} alcohol units</span>
           )}
         </label>
         <label style={{ fontSize: '0.9rem' }}>

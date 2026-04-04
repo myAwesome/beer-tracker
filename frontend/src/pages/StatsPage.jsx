@@ -9,7 +9,7 @@ export default function StatsPage() {
     getStats().then(setStats).catch((e) => setError(e.message));
   }, []);
 
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
   if (!stats) return <p>Loading...</p>;
 
   const cards = [
@@ -29,15 +29,15 @@ export default function StatsPage() {
           <div
             key={label}
             style={{
-              border: '1px solid #ddd',
+              border: '1px solid var(--border)',
               borderRadius: 8,
               padding: '1.25rem',
               textAlign: 'center',
-              background: '#fafafa',
+              background: 'var(--surface-muted)',
             }}
           >
             <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{value}</div>
-            <div style={{ color: '#666', fontSize: '0.85rem', marginTop: '0.25rem' }}>{label}</div>
+            <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '0.25rem' }}>{label}</div>
           </div>
         ))}
       </div>

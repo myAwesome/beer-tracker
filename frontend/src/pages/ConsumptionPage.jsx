@@ -15,8 +15,8 @@ export default function ConsumptionPage() {
 
   useEffect(() => { load(); }, []);
 
-  const thStyle = { padding: '0.5rem', textAlign: 'left', borderBottom: '2px solid #ddd', whiteSpace: 'nowrap' };
-  const tdStyle = { padding: '0.5rem', borderBottom: '1px solid #f0f0f0' };
+  const thStyle = { padding: '0.5rem', textAlign: 'left', borderBottom: '2px solid var(--border)', whiteSpace: 'nowrap' };
+  const tdStyle = { padding: '0.5rem', borderBottom: '1px solid var(--border-soft)' };
 
   return (
     <div>
@@ -35,7 +35,7 @@ export default function ConsumptionPage() {
 
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr style={{ background: '#f5f5f5' }}>
+          <tr style={{ background: 'var(--surface-muted)' }}>
             <th style={thStyle}>Beer</th>
             <th style={thStyle}>Date</th>
             <th style={thStyle}>Amount</th>
@@ -47,7 +47,7 @@ export default function ConsumptionPage() {
         </thead>
         <tbody>
           {logs.length === 0 && (
-            <tr><td colSpan={7} style={{ padding: '1rem', color: '#999', textAlign: 'center' }}>No drinks logged yet.</td></tr>
+            <tr><td colSpan={7} style={{ padding: '1rem', color: 'var(--text-muted)', textAlign: 'center' }}>No drinks logged yet.</td></tr>
           )}
           {logs.map((log) => (
             <tr key={log.id}>
@@ -56,9 +56,9 @@ export default function ConsumptionPage() {
               <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>{log.amount ? `${log.amount} ml` : '—'}</td>
               <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>{log.alcohol_units ? log.alcohol_units.toFixed(2) : '—'}</td>
               <td style={tdStyle}>
-                <span style={{ color: '#f5a623' }}>{'★'.repeat(Math.round(log.rating))}</span>
-                <span style={{ color: '#ccc' }}>{'★'.repeat(5 - Math.round(log.rating))}</span>
-                <span style={{ color: '#666', marginLeft: '0.25rem', fontSize: '0.85rem' }}>{log.rating}</span>
+                <span style={{ color: 'var(--accent)' }}>{'★'.repeat(Math.round(log.rating))}</span>
+                <span style={{ color: 'var(--border)' }}>{'★'.repeat(5 - Math.round(log.rating))}</span>
+                <span style={{ color: 'var(--text-muted)', marginLeft: '0.25rem', fontSize: '0.85rem' }}>{log.rating}</span>
               </td>
               <td style={tdStyle}>{log.notes || '—'}</td>
               <td style={tdStyle}>

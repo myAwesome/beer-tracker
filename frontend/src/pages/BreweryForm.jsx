@@ -31,7 +31,7 @@ export default function BreweryForm({ brewery, onSave, onCancel }) {
   const labelStyle = { display: 'block', marginBottom: '0.75rem' };
 
   return (
-    <form onSubmit={handleSubmit} style={{ background: '#f9f9f9', padding: '1rem', marginBottom: '1rem', borderRadius: 4 }}>
+    <form onSubmit={handleSubmit} style={{ background: 'var(--surface-muted)', padding: '1rem', marginBottom: '1rem', borderRadius: 4 }}>
       <h3 style={{ margin: '0 0 1rem' }}>{brewery?.id ? 'Edit Brewery' : 'New Brewery'}</h3>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
         <label style={labelStyle}>
