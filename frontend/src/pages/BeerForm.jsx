@@ -45,10 +45,10 @@ export default function BeerForm({ beer, onSave, onCancel }) {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem', borderRadius: 8, background: '#f9f9f9' }}
+      style={{ border: '1px solid var(--border)', padding: '1rem', marginBottom: '1rem', borderRadius: 8, background: 'var(--surface-muted)' }}
     >
       <h3 style={{ marginTop: 0 }}>{beer ? 'Edit Beer' : 'Add Beer'}</h3>
-      {error && <p style={{ color: 'red', margin: '0 0 0.5rem' }}>{error}</p>}
+      {error && <p style={{ color: 'var(--danger)', margin: '0 0 0.5rem' }}>{error}</p>}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
         <label style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', fontSize: '0.9rem' }}>
           Name *

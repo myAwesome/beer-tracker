@@ -22,15 +22,15 @@ export default function InventoryPage() {
 
   const totalStock = items.reduce((sum, i) => sum + i.quantity, 0);
 
-  const thStyle = { padding: '0.5rem', textAlign: 'left', borderBottom: '2px solid #ddd', whiteSpace: 'nowrap' };
-  const tdStyle = { padding: '0.5rem', borderBottom: '1px solid #f0f0f0' };
+  const thStyle = { padding: '0.5rem', textAlign: 'left', borderBottom: '2px solid var(--border)', whiteSpace: 'nowrap' };
+  const tdStyle = { padding: '0.5rem', borderBottom: '1px solid var(--border-soft)' };
 
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
         <h2 style={{ margin: 0 }}>
           Inventory{' '}
-          <span style={{ fontSize: '1rem', color: '#666', fontWeight: 'normal' }}>({totalStock} units in stock)</span>
+          <span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>({totalStock} units in stock)</span>
         </h2>
         <button onClick={openCreate}>+ Add Stock</button>
       </div>
@@ -46,7 +46,7 @@ export default function InventoryPage() {
 
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr style={{ background: '#f5f5f5' }}>
+          <tr style={{ background: 'var(--surface-muted)' }}>
             <th style={thStyle}>Beer</th>
             <th style={thStyle}>Qty</th>
             <th style={thStyle}></th>
@@ -54,7 +54,7 @@ export default function InventoryPage() {
         </thead>
         <tbody>
           {items.length === 0 && (
-            <tr><td colSpan={6} style={{ padding: '1rem', color: '#999', textAlign: 'center' }}>No inventory yet.</td></tr>
+            <tr><td colSpan={6} style={{ padding: '1rem', color: 'var(--text-muted)', textAlign: 'center' }}>No inventory yet.</td></tr>
           )}
           {items.map((item) => (
             <tr key={item.id}>

@@ -17,8 +17,8 @@ export default function StylesPage() {
     load();
   };
 
-  const thStyle = { padding: '0.5rem', textAlign: 'left', borderBottom: '2px solid #ddd', whiteSpace: 'nowrap' };
-  const tdStyle = { padding: '0.5rem', borderBottom: '1px solid #f0f0f0' };
+  const thStyle = { padding: '0.5rem', textAlign: 'left', borderBottom: '2px solid var(--border)', whiteSpace: 'nowrap' };
+  const tdStyle = { padding: '0.5rem', borderBottom: '1px solid var(--border-soft)' };
 
   return (
     <div>
@@ -44,14 +44,14 @@ export default function StylesPage() {
 
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr style={{ background: '#f5f5f5' }}>
+          <tr style={{ background: 'var(--surface-muted)' }}>
             <th style={thStyle}>Name</th>
             <th style={thStyle}></th>
           </tr>
         </thead>
         <tbody>
           {styles.length === 0 && (
-            <tr><td colSpan={2} style={{ padding: '1rem', color: '#999', textAlign: 'center' }}>No styles yet. Add one!</td></tr>
+            <tr><td colSpan={2} style={{ padding: '1rem', color: 'var(--text-muted)', textAlign: 'center' }}>No styles yet. Add one!</td></tr>
           )}
           {styles.map((s) => (
             <tr key={s.id}>
