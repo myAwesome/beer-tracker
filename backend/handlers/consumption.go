@@ -65,6 +65,54 @@ func (h *ConsumptionHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, entry)
 }
 
+func (h *ConsumptionHandler) Update(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	var entry models.ConsumptionLog
+	if err := h.db.First(&entry, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+		return
+	}
+
+	var input models.ConsumptionLog
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if input.BeerID == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "beer_id is required"})
+		return
+	}
+	if input.Rating < 1.0 || input.Rating > 5.0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "rating must be between 1 and 5"})
+		return
+	}
+	if input.ConsumedAt == "" {
+		input.ConsumedAt = time.Now().Format("2006-01-02")
+	}
+
+	var beer models.Beer
+	if err := h.db.First(&beer, input.BeerID).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "beer not found"})
+		return
+	}
+
+	entry.BeerID = input.BeerID
+	entry.Amount = input.Amount
+	entry.Rating = input.Rating
+	entry.Notes = input.Notes
+	entry.ConsumedAt = input.ConsumedAt
+	if input.Amount > 0 {
+		entry.AlcoholUnits = input.Amount * beer.ABV / 1000
+	} else {
+		entry.AlcoholUnits = 0
+	}
+
+	h.db.Save(&entry)
+	h.db.Preload("Beer").First(&entry, entry.ID)
+	c.JSON(http.StatusOK, entry)
+}
+
 func (h *ConsumptionHandler) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	h.db.Delete(&models.ConsumptionLog{}, id)

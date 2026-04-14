@@ -30,6 +30,7 @@ export const deleteInventory = (id) => request(`/api/inventory/${id}`, { method:
 export const getConsumption = (beerID) => request(`/api/consumption${beerID ? `?beer_id=${beerID}` : ''}`);
 export const createConsumption = (data) => request('/api/consumption', { method: 'POST', body: JSON.stringify(data) });
 export const deleteConsumption = (id) => request(`/api/consumption/${id}`, { method: 'DELETE' });
+export const updateConsumption = (id, data) => request(`/api/consumption/${id}`, { method: 'PUT', body: JSON.stringify(data) });
 
 // Breweries
 export const getBreweries = (q) => request(`/api/breweries${q ? `?q=${encodeURIComponent(q)}` : ''}`);

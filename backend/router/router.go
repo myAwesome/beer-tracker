@@ -45,6 +45,7 @@ func Setup(db *gorm.DB) *gin.Engine {
 		con.GET("", conH.List)
 		con.POST("", conH.Create)
 		con.GET("/:id", conH.Get)
+        con.PUT("/:id", conH.Update)
 		con.DELETE("/:id", conH.Delete)
 
 		breweryH := handlers.NewBreweryHandler(db)
