@@ -48,3 +48,4 @@ export const deleteStyle = (id) => request(`/api/styles/${id}`, { method: 'DELET
 
 // Stats
 export const getStats = () => request('/api/stats');
+export const getDailyAlcohol = () => request('/api/stats-daily-alcohol');

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getStats } from '../api';
+import AlcoholChart from "../components/AlcoholChart";
 
 export default function StatsPage() {
   const [stats, setStats] = useState(null);
@@ -24,6 +25,7 @@ export default function StatsPage() {
   return (
     <div>
       <h2>Dashboard</h2>
+      <AlcoholChart/>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
         {cards.map(({ label, value }) => (
           <div
