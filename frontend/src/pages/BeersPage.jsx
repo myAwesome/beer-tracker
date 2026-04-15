@@ -49,6 +49,7 @@ export default function BeersPage() {
           <tr style={{ background: 'var(--surface-muted)' }}>
             <th style={thStyle}>Name</th>
             <th style={thStyle}>Brewery</th>
+            <th style={thStyle}>Country</th>
             <th style={thStyle}>Style</th>
             <th style={thStyle}>ABV</th>
             <th style={thStyle}>IBU</th>
@@ -63,6 +64,7 @@ export default function BeersPage() {
             <tr key={b.id}>
               <td style={tdStyle}><strong>{b.name}</strong></td>
               <td style={tdStyle}>{b.brewery_obj?.name || b.brewery || '—'}</td>
+              <td style={tdStyle}>{b.brewery_obj?.country || b.brewery || '—'}</td>
               <td style={tdStyle}>{b.style || '—'}</td>
               <td style={tdStyle}>{b.abv ? `${b.abv}%` : '—'}</td>
               <td style={tdStyle}>{b.ibu ?? '—'}</td>
