@@ -92,11 +92,7 @@ export default function ConsumptionPage() {
                     <tr key={log.id}>
                         <td style={tdStyle}>{log.beer?.name ?? `Beer #${log.beer_id}`}</td>
                         <td style={{...tdStyle, whiteSpace: 'nowrap'}}>
-                            {new Date(log.consumed_at).toLocaleDateString('en-GB', {
-                                day: '2-digit',
-                                month: 'short',
-                                year: 'numeric',
-                            }).toLowerCase()}
+                            {log.consumed_at.slice(0,10)}
                         </td>
                         <td style={{...tdStyle, whiteSpace: 'nowrap'}}>{log.amount ? `${log.amount} ml` : '—'}</td>
                         <td style={{...tdStyle, whiteSpace: 'nowrap'}}>
