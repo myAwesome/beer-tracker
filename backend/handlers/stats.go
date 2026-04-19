@@ -1,11 +1,13 @@
 package handlers
 
 import (
-	"net/http"
 	"beer-tracker/models"
+	"net/http"
+	"strconv"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"time"
 )
 
 type StatsHandler struct{ db *gorm.DB }
@@ -23,9 +25,14 @@ type StatsResponse struct {
 }
 
 type DailyUnits struct {
-	Date        string  `json:"date"`
-	DailyUnits  float64 `json:"daily_units"`
-	RollingSum  float64 `json:"rolling_7d"`
+	Date       string  `json:"date"`
+	DailyUnits float64 `json:"daily_units"`
+	RollingSum float64 `json:"rolling_7d"`
+}
+
+type DailyConsumption struct {
+	Date         string  `json:"date"`
+	AlcoholUnits float64 `json:"alcohol_units"`
 }
 
 func (h *StatsHandler) Get(c *gin.Context) {
@@ -129,6 +136,52 @@ func (h *StatsHandler) DailyAlcohol(c *gin.Context) {
 			Date:       full[right].Date.Format("2006-01-02"),
 			DailyUnits: full[right].DailyUnits,
 			RollingSum: rollingSum,
+		}
+	}
+
+	c.JSON(http.StatusOK, result)
+}
+
+// ConsumptionByDays повертає суму alcohol_units за кожен день
+// за останні `days` днів (включаючи сьогодні).
+// Query param: ?days=7 або ?days=30 (default: 7)
+func (h *StatsHandler) ConsumptionByDays(c *gin.Context) {
+	days := 7
+	if d := c.Query("days"); d != "" {
+		if parsed, err := strconv.Atoi(d); err == nil && parsed > 0 {
+			days = parsed
+		}
+	}
+
+	sinceStr := time.Now().AddDate(0, 0, -(days - 1)).Format("2006-01-02")
+
+	var logs []models.ConsumptionLog
+	err := h.db.Model(&models.ConsumptionLog{}).
+		Select("consumed_at, alcohol_units").
+		Where("consumed_at >= ?", sinceStr).
+		Find(&logs).Error
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	unitsMap := make(map[string]float64)
+	for _, log := range logs {
+		dateKey := log.ConsumedAt
+		if len(dateKey) > 10 {
+			dateKey = dateKey[:10]
+		}
+		unitsMap[dateKey] += log.AlcoholUnits
+	}
+
+	// Будуємо повний масив від сьогодні назад (без дірок)
+	result := make([]DailyConsumption, days)
+	for i := 0; i < days; i++ {
+		key := time.Now().AddDate(0, 0, -i).Format("2006-01-02")
+		result[i] = DailyConsumption{
+			Date:         key,
+			AlcoholUnits: unitsMap[key],
 		}
 	}
 

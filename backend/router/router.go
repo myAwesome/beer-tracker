@@ -67,6 +67,7 @@ func Setup(db *gorm.DB) *gin.Engine {
 		statsH := handlers.NewStatsHandler(db)
 		api.GET("/stats", statsH.Get)
 		api.GET("/stats-daily-alcohol", statsH.DailyAlcohol)
+		api.GET("/stats/consumption-by-days", statsH.ConsumptionByDays)
 	}
 
 	return r
